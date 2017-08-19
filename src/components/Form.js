@@ -4,9 +4,11 @@ class Form extends Component {
   render() {
     return (
       <div className="jumbotron">
-        <form>
-          <input type="text" onChange={this.props.onChange} value={this.props.defaultValue}/>
+        <form onSubmit={this.props.onSubmit}>
+          <input type="text" name="pilot" onChange={this.props.onChange} value={this.props.defaultValue}/>
+          <button type="submit" value="Submit">Submit</button>
         </form>
+        <h4>{this.props.pilot && <span> Welcome, {this.props.pilot}! </span>}</h4>
       </div>
     )
   }

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Form from './Form';
+import Vehicles from './Vehicles'
+import Starships from './Starships'
 import '../styles/App.css';
 
 class App extends Component {
@@ -10,21 +12,22 @@ class App extends Component {
         starships: [],
         value: "",
         pilot: "",
+        message: "",
       }
     }
 
   _pilotNameChange = (event) => {
-    console.log("event fired")
     this.setState({value: event.target.value})
   }
 
   _submit = (event) => {
     event.preventDefault()
-    this.setState({pilot: event.target.value})
+    this.setState({pilot: event.target.pilot.value, value: ""})
   }
 
   componentDidMount() {
     this.fetchVehicles()
+    this.fetchStarships()
   }
 
   fetchVehicles() {
@@ -34,6 +37,16 @@ class App extends Component {
     })
     .then((vehicles) => {
       this.setState({ vehicles });
+    })
+  }
+
+  fetchStarships() {
+    fetch('https://swapi.co/api/starships/?format=json')
+    .then((response) => {
+      return response.json();
+    })
+    .then((starships) => {
+      this.setState({ starships });
     })
   }
 
@@ -59,7 +72,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Form onChange={this._pilotNameChange} defaultValue={this.state.value} />
+        <Form onSubmit={this._submit} onChange={this._pilotNameChange} defaultValue={this.state.value} pilot={this.state.pilot} />
+        <div className="label">Vehicles:</div>
+        <Vehicles vehicles={this.state.vehicles} />
+        <div className="label">Starships:</div>
+        <Starships starships={this.state.starships} />
       </div>
     );
   }

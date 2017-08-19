@@ -9,3 +9,13 @@
 .form{
   text-align: center;
 }
+
+.label {
+  background-color: white;
+  padding: 1em;
+  border-radius: 5px;
+  width: 150px;
+  margin: 1em 1em;
+  -ms-align-items: center;
+  align-items: center;
+}
